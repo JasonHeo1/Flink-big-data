@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: order-producer
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin123
+    virtual-host: /
+
+app:
+  producer:
+    # 交易对列表
+    symbols:
+      - BTC-USDT
+      - ETH-USDT
+      - BNB-USDT
+    # 消息发送配置
+    rabbitmq:
+      exchange: trade.orders
+      routing-key: order.created
+    # 模拟订单生成配置
+    simulation:
+      # 每秒生成订单数
+      orders-per-second: 10
+      # 价格波动范围（百分比）
+      price-fluctuation: 2.0
+      # 初始价格
+      initial-prices:
+        BTC-USDT: 62000.0
+        ETH-USDT: 3500.0
+        BNB-USDT: 450.0
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
